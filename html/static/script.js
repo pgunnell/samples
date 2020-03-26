@@ -33,3 +33,36 @@ function selectPWG(element, pwg) {
     }
   });
 }
+
+function clearNotes(element, uid) {
+  $(element).parent().find('textarea').get(0).value = '';
+  let data = {"uid": uid, "notes": ''};
+  $.ajax({
+    type: "POST",
+    contentType: "application/json",
+    url: "update",
+    data: JSON.stringify(data),
+  }).done(function (data) {
+    alert('Text reset in the database');
+  }).fail(function(data) {
+    alert('Not reset');
+  })
+}
+
+function saveNotes(element, uid) {
+    // Take the value of the text box
+    let notes = $(element).parent().find('textarea').get(0).value;
+    console.log(notes);
+    console.log($(element).parent().find('textarea').get(0));
+    let data = {"uid": uid, "notes": notes};
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "update",
+        data: JSON.stringify(data),
+    }).done(function (data) {
+        alert('Text saved in the database');
+    }).fail(function(data) {
+        alert('Error in saving');
+    })    
+}
